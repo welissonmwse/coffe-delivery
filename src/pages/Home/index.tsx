@@ -1,16 +1,8 @@
-import {
-  Coffee,
-  Minus,
-  Package,
-  Plus,
-  ShoppingCart,
-  ShoppingCartSimple,
-  Timer,
-} from 'phosphor-react'
+import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
 import { Header } from '../../components/Header'
 import BackgroundCoffe from '../../assets/Imagem.png'
-import CoffeImg from '../../assets/Coffee.svg'
 import * as C from './styles'
+import { Card } from '../../components/Card'
 
 export function Home() {
   return (
@@ -61,151 +53,12 @@ export function Home() {
       <C.CoffeSection>
         <h2>Nossos cafés</h2>
         <C.CoffeContent>
-          <C.CardContainer>
-            <img src={CoffeImg} alt="" />
-            <C.CardContainerTitle>
-              <h3>Tradicional</h3>
-            </C.CardContainerTitle>
-            <h4>Expresso Tradicional</h4>
-            <p>O tradicional café feito com água quente e grãos moídos</p>
-            <C.CardFooter>
-              <div className="priceAmount">
-                <p>
-                  <span>R$ </span>9,90
-                </p>
-              </div>
-              <div className="cartButtonsAmount">
-                <div className="buttons">
-                  <button>
-                    <Minus size={14} />
-                  </button>
-                  <p>1</p>
-                  <button>
-                    <Plus size={14} />
-                  </button>
-                </div>
-                <button className="cart">
-                  <ShoppingCartSimple size={22} />
-                </button>
-              </div>
-            </C.CardFooter>
-          </C.CardContainer>
-          <C.CardContainer>
-            <img src={CoffeImg} alt="" />
-            <C.CardContainerTitle>
-              <h3>Tradicional</h3>
-            </C.CardContainerTitle>
-            <h4>Expresso Tradicional</h4>
-            <p>O tradicional café feito com água quente e grãos moídos</p>
-            <C.CardFooter>
-              <div className="priceAmount">
-                <p>
-                  <span>R$ </span>9,90
-                </p>
-              </div>
-              <div className="cartButtonsAmount">
-                <div className="buttons">
-                  <button>
-                    <Minus size={14} />
-                  </button>
-                  <p>1</p>
-                  <button>
-                    <Plus size={14} />
-                  </button>
-                </div>
-                <button className="cart">
-                  <ShoppingCartSimple size={22} />
-                </button>
-              </div>
-            </C.CardFooter>
-          </C.CardContainer>
-          <C.CardContainer>
-            <img src={CoffeImg} alt="" />
-            <C.CardContainerTitle>
-              <h3>Tradicional</h3>
-            </C.CardContainerTitle>
-            <h4>Expresso Tradicional</h4>
-            <p>O tradicional café feito com água quente e grãos moídos</p>
-            <C.CardFooter>
-              <div className="priceAmount">
-                <p>
-                  <span>R$ </span>9,90
-                </p>
-              </div>
-              <div className="cartButtonsAmount">
-                <div className="buttons">
-                  <button>
-                    <Minus size={14} />
-                  </button>
-                  <p>1</p>
-                  <button>
-                    <Plus size={14} />
-                  </button>
-                </div>
-                <button className="cart">
-                  <ShoppingCartSimple size={22} />
-                </button>
-              </div>
-            </C.CardFooter>
-          </C.CardContainer>
-          <C.CardContainer>
-            <img src={CoffeImg} alt="" />
-            <C.CardContainerTitle>
-              <h3>Tradicional</h3>
-            </C.CardContainerTitle>
-            <h4>Expresso Tradicional</h4>
-            <p>O tradicional café feito com água quente e grãos moídos</p>
-            <C.CardFooter>
-              <div className="priceAmount">
-                <p>
-                  <span>R$ </span>9,90
-                </p>
-              </div>
-              <div className="cartButtonsAmount">
-                <div className="buttons">
-                  <button>
-                    <Minus size={14} />
-                  </button>
-                  <p>1</p>
-                  <button>
-                    <Plus size={14} />
-                  </button>
-                </div>
-                <button className="cart">
-                  <ShoppingCartSimple size={22} />
-                </button>
-              </div>
-            </C.CardFooter>
-          </C.CardContainer>
-          <C.CardContainer>
-            <img src={CoffeImg} alt="" />
-            <C.CardContainerTitle>
-              <h3>Tradicional</h3>
-            </C.CardContainerTitle>
-            <h4>Expresso Tradicional</h4>
-            <p>O tradicional café feito com água quente e grãos moídos</p>
-            <C.CardFooter>
-              <div className="priceAmount">
-                <p>
-                  <span>R$ </span>9,90
-                </p>
-              </div>
-              <div className="cartButtonsAmount">
-                <div className="buttons">
-                  <button>
-                    <Minus size={14} />
-                  </button>
-                  <p>1</p>
-                  <button>
-                    <Plus size={14} />
-                  </button>
-                </div>
-                <button className="cart">
-                  <ShoppingCartSimple size={22} />
-                </button>
-              </div>
-            </C.CardFooter>
-          </C.CardContainer>
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
         </C.CoffeContent>
       </C.CoffeSection>
     </C.HomeContainer>
