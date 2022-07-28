@@ -1,28 +1,49 @@
 import * as C from './styles'
-import CoffeImg from '../../assets/Coffee.svg'
 import { Minus, Plus, ShoppingCartSimple } from 'phosphor-react'
-export function Card() {
+
+interface CardProps {
+  name: string
+  image: string
+  tags: string
+  description: string
+  price: string
+  amount: number
+  handleAddAmount: () => void
+  handleLessAmount: () => void
+}
+
+export function Card({
+  name,
+  image,
+  tags,
+  description,
+  price,
+  amount,
+  handleAddAmount,
+  handleLessAmount,
+}: CardProps) {
   return (
     <C.CardContainer>
-      <img src={CoffeImg} alt="" />
+      <img src={image} alt="" />
       <C.CardContainerTitle>
-        <h3>Tradicional</h3>
+        <h3>{tags}</h3>
       </C.CardContainerTitle>
-      <h4>Expresso Tradicional</h4>
-      <p>O tradicional café feito com água quente e grãos moídos</p>
+      <h4>{name}</h4>
+      <p>{description}</p>
       <C.CardFooter>
         <div className="priceAmount">
           <p>
-            <span>R$ </span>9,90
+            <span>R$ </span>
+            {price}
           </p>
         </div>
         <div className="cartButtonsAmount">
           <div className="buttons">
-            <button>
+            <button onClick={() => handleLessAmount()}>
               <Minus size={14} />
             </button>
-            <p>1</p>
-            <button>
+            <p>{amount}</p>
+            <button onClick={() => handleAddAmount()}>
               <Plus size={14} />
             </button>
           </div>

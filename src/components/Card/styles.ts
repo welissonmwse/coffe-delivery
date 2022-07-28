@@ -82,6 +82,11 @@ export const CardFooter = styled.div`
       cursor: pointer;
       color: ${(props) => props.theme.purple};
       background: transparent;
+      transition: color 0.2s;
+
+      &:hover {
+        color: ${(props) => props.theme['purple-dark']};
+      }
     }
 
     p {
@@ -95,8 +100,13 @@ export const CardFooter = styled.div`
     border: none;
     cursor: pointer;
     color: ${(props) => props.theme['base-card']};
-    background: ${(props) => props.theme.purple};
+    background: ${(props) => props.theme['purple-dark']};
     padding: 8px;
     border-radius: 6px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: ${(props) => props.theme.purple};
+    }
   }
 `
