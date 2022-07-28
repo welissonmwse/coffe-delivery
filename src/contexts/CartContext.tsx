@@ -17,7 +17,7 @@ interface CartContextData {
   addProduct: (productId: number) => Promise<void>
 }
 
-const CartContex = createContext<CartContextData>({} as CartContextData)
+export const CartContex = createContext<CartContextData>({} as CartContextData)
 
 export function CartContexProvaider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<Product[]>(() => {
