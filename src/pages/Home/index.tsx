@@ -3,8 +3,9 @@ import { Header } from '../../components/Header'
 import BackgroundCoffe from '../../assets/Imagem.png'
 import * as C from './styles'
 import { Card } from '../../components/Card'
-import { products } from '../../utils/products'
+import ArabeCoffe from '../../assets/arabe.svg'
 import { useEffect, useState } from 'react'
+import { api } from '../../services/api'
 
 interface CoffeDataType {
   id: number
@@ -13,7 +14,6 @@ interface CoffeDataType {
   tags: string
   description: string
   price: string
-  amount: number
 }
 
 export function Home() {
@@ -33,7 +33,11 @@ export function Home() {
   }
 
   useEffect(() => {
-    setCoffes(products)
+    ;(async () => {
+      const response = await api.get<CoffeDataType[]>('/products')
+      setCoffes(response.data)
+    })()
+    // setCoffes(products)
   }, [])
 
   return (
@@ -88,7 +92,7 @@ export function Home() {
             <Card
               key={coffe.id}
               name={coffe.name}
-              image={coffe.image}
+              image={ArabeCoffe}
               price={coffe.price}
               tags={coffe.tags}
               description={coffe.description}
