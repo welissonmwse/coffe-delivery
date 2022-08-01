@@ -3,39 +3,29 @@ import { Header } from '../../components/Header'
 import BackgroundCoffe from '../../assets/Imagem.png'
 import * as C from './styles'
 import { Card } from '../../components/Card'
-import ArabeCoffe from '../../assets/arabe.svg'
 import { useEffect, useState } from 'react'
 import { api } from '../../services/api'
+import { Product } from '../../@types'
 
-interface CoffeDataType {
-  id: number
-  name: string
-  image: string
-  tags: string
-  description: string
-  price: string
-}
+// interface CoffeDataType {
+//   id: number
+//   name: string
+//   image: string
+//   tags: string
+//   description: string
+//   price: string
+// }
 
 export function Home() {
-  const [coffes, setCoffes] = useState<CoffeDataType[]>([])
-  const [amount, setAmount] = useState(1)
-
-  function handleAddAmount(id: number) {
-    // const coffe = coffes.filter((coffe) => coffe.id === id)
-    // if (coffe) {
-    //   coffe.amount = amount + 1
-    // }
-    setAmount(amount + 1)
-  }
-
-  function handleLessAmount(id: number) {
-    setAmount(amount - 1)
-  }
+  const [products, setProducts] = useState<Product[]>([])
+  // const [amount, setAmount] = useState(0)
 
   useEffect(() => {
     ;(async () => {
-      const response = await api.get<CoffeDataType[]>('/products')
-      setCoffes(response.data)
+      const response = await api.get<Product[]>('/products')
+      const data = response.data.map((product) => ({ ...product, amount: 0 }))
+      setProducts(data)
+      console.log(data)
     })()
     // setCoffes(products)
   }, [])
@@ -88,18 +78,8 @@ export function Home() {
       <C.CoffeSection>
         <h2>Nossos cafés</h2>
         <C.CoffeContent>
-          {coffes.map((coffe) => (
-            <Card
-              key={coffe.id}
-              name={coffe.name}
-              image={ArabeCoffe}
-              price={coffe.price}
-              tags={coffe.tags}
-              description={coffe.description}
-              amount={amount}
-              handleAddAmount={() => handleAddAmount(coffe.id)}
-              handleLessAmount={() => handleLessAmount(coffe.id)}
-            />
+          {products.map((product) => (
+            <Card key={product.id} product={product} />
           ))}
         </C.CoffeContent>
       </C.CoffeSection>

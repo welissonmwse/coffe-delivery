@@ -2,8 +2,10 @@ import * as C from './styles'
 
 import LogoImg from '../../assets/logo.svg'
 import { MapPin, ShoppingCart } from 'phosphor-react'
+import { useCart } from '../../hooks/useCart'
 
 export function Header() {
+  const { cart } = useCart()
   return (
     <C.HeaderContainer>
       <C.HeaderContent>
@@ -15,6 +17,7 @@ export function Header() {
           </span>
           <a href="">
             <ShoppingCart size={22} />
+            {cart.length > 0 && <p>{cart.length}</p>}
           </a>
         </div>
       </C.HeaderContent>

@@ -34,6 +34,20 @@ export const HeaderContent = styled.div`
       padding: 8px;
       color: ${(props) => props.theme['yellow-dark']};
       background-color: ${(props) => props.theme['yellow-light']};
+      position: relative;
+
+      p {
+        position: absolute;
+        top: -30%;
+        right: -30%;
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 1000px;
+        color: ${(props) => props.theme.white};
+        background-color: ${(props) => props.theme['yellow-dark']};
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
     }
   }
 `

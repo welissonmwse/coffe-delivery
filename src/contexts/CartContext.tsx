@@ -14,7 +14,8 @@ interface UpdateProductAmount {
 
 interface CartContextData {
   cart: Product[]
-  addProduct: (productId: number) => Promise<void>
+  addProduct: (product: Product) => Promise<void>
+  updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void
 }
 
 export const CartContex = createContext<CartContextData>({} as CartContextData)
@@ -30,17 +31,18 @@ export function CartContexProvaider({ children }: CartProviderProps) {
     return []
   })
 
-  async function addProduct(productId: number) {
+  async function addProduct(curruentProduct: Product) {
     try {
       const updadteCart = [...cart]
       const productExists = updadteCart.find(
-        (product) => product.id === productId,
+        (product) => product.id === curruentProduct.id,
       )
-      const stock = await api.get<Stock>(`/stock/${productId}`)
+      const stock = await api.get<Stock>(`/stock/${curruentProduct.id}`)
 
       const stockAmount = stock.data.amount
       const currentAmount = productExists ? productExists.amount : 0
-      const amount = currentAmount + 1
+      const amount = currentAmount + curruentProduct.amount
+
       if (amount > stockAmount) {
         toast.error('Quantidade solicitada fora de estoque')
         // eslint-disable-next-line no-useless-return
@@ -50,7 +52,7 @@ export function CartContexProvaider({ children }: CartProviderProps) {
       if (productExists) {
         productExists.amount = amount
       } else {
-        const product = await api.get(`/products/${productId}`)
+        const product = await api.get(`/products/${curruentProduct.id}`)
         const newProduct = {
           ...product.data,
           amount: 1,
@@ -70,12 +72,48 @@ export function CartContexProvaider({ children }: CartProviderProps) {
   //   } catch (error) {}
   // }
 
-  // function updateProductAmount({ productId, amount }: UpdateProductAmount) {
-  //   try {
-  //   } catch (error) {}
-  // }
+  async function updateProductAmount({
+    productId,
+    amount,
+  }: UpdateProductAmount) {
+    try {
+      if (amount <= 0) return
+
+      const updadteCart = [...cart]
+      const productExists = updadteCart.find(
+        (product) => product.id === productId,
+      )
+      const stock = await api.get<Stock>(`/stock/${productId}`)
+
+      const stockAmount = stock.data.amount
+
+      if (amount > stockAmount) {
+        toast.error('Quantidade solicitada fora de estoque')
+        // eslint-disable-next-line no-useless-return
+        return
+      }
+
+      if (productExists) {
+        productExists.amount = amount
+        setCart(updadteCart)
+        localStorage.setItem('@CoffeDelivery:cart', JSON.stringify(updadteCart))
+      }
+      // else {
+      //   const product = await api.get(`/products/${productId}`)
+      //   const newProduct = {
+      //     ...product.data,
+      //     amount,
+      //   }
+
+      //   updadteCart.push(newProduct)
+      //   setCart(updadteCart)
+      // }
+    } catch (error) {
+      toast.error('Erro na alteração de quantidade do produto')
+    }
+  }
   return (
-    <CartContex.Provider value={{ cart, addProduct }}>
+    <CartContex.Provider value={{ cart, addProduct, updateProductAmount }}>
       {children}
     </CartContex.Provider>
   )
