@@ -8,8 +8,10 @@ export const HeaderContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: 1120px;
+  margin: 0 auto;
 
-  padding: 2rem 0;
+  padding: 2rem 1rem;
 
   div {
     display: flex;

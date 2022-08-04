@@ -1,5 +1,4 @@
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
-import { Header } from '../../components/Header'
 import BackgroundCoffe from '../../assets/Imagem.png'
 import * as C from './styles'
 import { Card } from '../../components/Card'
@@ -32,7 +31,6 @@ export function Home() {
 
   return (
     <C.HomeContainer>
-      <Header />
       <C.BannerSection>
         <C.BannerContent>
           <h1>
