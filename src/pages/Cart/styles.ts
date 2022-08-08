@@ -126,3 +126,151 @@ export const RadioBox = styled.button`
     text-transform: uppercase;
   }
 `
+
+export const ContentCart = styled.div`
+  margin-top: 15px;
+  padding: 2.5rem;
+  background-color: ${(props) => props.theme['base-card']};
+  border-radius: 6px 44px;
+  min-width: 448px;
+
+  .cardProduct {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+
+    img {
+      width: 64px;
+      height: 64px;
+    }
+
+    .bodyCard {
+      width: 100%;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 8px;
+
+      h5 {
+        font-size: 1rem;
+        line-height: 20.8px;
+        color: ${(props) => props.theme['base-subtitle']};
+        font-weight: 400;
+      }
+
+      p {
+        line-height: 20.8px;
+        font-weight: 700;
+      }
+    }
+
+    .footerCard {
+      display: flex;
+      gap: 8px;
+
+      .buttons {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background-color: ${(props) => props.theme['base-button']};
+        padding: 8px;
+        border-radius: 6px;
+        font-size: 1rem;
+
+        button {
+          border: none;
+          cursor: pointer;
+          color: ${(props) => props.theme.purple};
+          background: transparent;
+          transition: color 0.2s;
+
+          &:hover {
+            color: ${(props) => props.theme['purple-dark']};
+          }
+        }
+
+        p {
+          font-size: 1rem;
+          padding: 4px 8px;
+          margin: 0;
+        }
+      }
+
+      svg {
+        color: ${(props) => props.theme['purple-dark']};
+      }
+
+      .remove {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background-color: ${(props) => props.theme['base-button']};
+        padding: 8px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        border: none;
+        cursor: pointer;
+        color: ${(props) => props.theme['base-text']};
+        font-weight: 400;
+        transition: color 0.2s;
+
+        &:hover {
+          background-color: ${(props) => props.theme['base-hover']};
+        }
+      }
+    }
+  }
+
+  .divider {
+    background-color: ${(props) => props.theme['base-button']};
+    height: 1px;
+    margin: 1.5rem 0;
+  }
+`
+
+export const CartFooter = styled.div`
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & + div {
+      margin-top: 12px;
+    }
+
+    h6 {
+      font-size: 0.875rem;
+      font-weight: 400;
+    }
+  }
+
+  .total {
+    h6,
+    p {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: ${(props) => props.theme['base-subtitle']};
+    }
+  }
+
+  button {
+    width: 100%;
+    color: ${(props) => props.theme.white};
+    background-color: ${(props) => props.theme.yellow};
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    border-radius: 6px;
+    padding: 8px;
+    margin-top: 24px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: ${(props) => props.theme['yellow-dark']};
+    }
+  }
+`
