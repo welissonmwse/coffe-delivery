@@ -4,7 +4,7 @@ export interface Product {
   image: string
   tags: string
   description: string
-  price: string
+  price: number
   amount: number
 }
 

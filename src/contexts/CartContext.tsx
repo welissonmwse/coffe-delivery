@@ -109,17 +109,9 @@ export function CartContexProvaider({ children }: CartProviderProps) {
         productExists.amount = amount
         setCart(updadteCart)
         localStorage.setItem('@CoffeDelivery:cart', JSON.stringify(updadteCart))
+      } else {
+        throw Error()
       }
-      // else {
-      //   const product = await api.get(`/products/${productId}`)
-      //   const newProduct = {
-      //     ...product.data,
-      //     amount,
-      //   }
-
-      //   updadteCart.push(newProduct)
-      //   setCart(updadteCart)
-      // }
     } catch (error) {
       toast.error('Erro na alteração de quantidade do produto')
     }

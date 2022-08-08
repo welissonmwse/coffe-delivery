@@ -8,12 +8,33 @@ import {
   Plus,
   Trash,
 } from 'phosphor-react'
+import { Product } from '../../@types'
 import ArabeCoffe from '../../assets/arabe.svg'
 import { useCart } from '../../hooks/useCart'
 import * as C from './styles'
 
 export function Cart() {
-  const { cart, removeProduct } = useCart()
+  const { cart, removeProduct, updateProductAmount } = useCart()
+
+  const subTotal = cart.reduce((subTotal, product) => {
+    return subTotal + product.amount * product.price
+  }, 0)
+
+  const total = subTotal + 3.5
+
+  function handleProductIncrement(product: Product) {
+    updateProductAmount({
+      productId: product.id,
+      amount: product.amount + 1,
+    })
+  }
+
+  function handleProductDecrement(product: Product) {
+    updateProductAmount({
+      productId: product.id,
+      amount: product.amount - 1,
+    })
+  }
   return (
     <C.CartContainer>
       <C.FormContainer>
@@ -83,15 +104,26 @@ export function Cart() {
                   <div className="bodyCard">
                     <div className="header">
                       <h5>{product.name}l</h5>
-                      <p>{product.price}</p>
+                      <p>
+                        {new Intl.NumberFormat('pt-br', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        }).format(product.price)}
+                      </p>
                     </div>
                     <div className="footerCard">
                       <div className="buttons">
-                        <button>
+                        <button
+                          type="button"
+                          onClick={() => handleProductDecrement(product)}
+                        >
                           <Minus size={14} />
                         </button>
                         <p>{product.amount}</p>
-                        <button>
+                        <button
+                          type="button"
+                          onClick={() => handleProductIncrement(product)}
+                        >
                           <Plus size={14} />
                         </button>
                       </div>
@@ -111,7 +143,12 @@ export function Cart() {
             <C.CartFooter>
               <div>
                 <h6>Total de itens</h6>
-                <p>R$ 29,70</p>
+                <p>
+                  {new Intl.NumberFormat('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  }).format(subTotal)}
+                </p>
               </div>
               <div>
                 <h6>Entrega</h6>
@@ -119,7 +156,12 @@ export function Cart() {
               </div>
               <div className="total">
                 <h6>Total</h6>
-                <p>R$ 33,20</p>
+                <p>
+                  {new Intl.NumberFormat('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  }).format(total)}
+                </p>
               </div>
               <button type="submit">CONFIRMAR PEDIDO</button>
             </C.CartFooter>
