@@ -9,9 +9,11 @@ import {
   Trash,
 } from 'phosphor-react'
 import ArabeCoffe from '../../assets/arabe.svg'
+import { useCart } from '../../hooks/useCart'
 import * as C from './styles'
 
 export function Cart() {
+  const { cart, removeProduct } = useCart()
   return (
     <C.CartContainer>
       <C.FormContainer>
@@ -74,56 +76,38 @@ export function Cart() {
         <div className="containerRight">
           <h4>Cafés selecionados</h4>
           <C.ContentCart>
-            <div className="cardProduct">
-              <img src={ArabeCoffe} alt="" />
-              <div className="bodyCard">
-                <div className="header">
-                  <h5>Expresso Tradicional</h5>
-                  <p>R$ 9.90</p>
-                </div>
-                <div className="footerCard">
-                  <div className="buttons">
-                    <button>
-                      <Minus size={14} />
-                    </button>
-                    <p>1</p>
-                    <button>
-                      <Plus size={14} />
-                    </button>
+            {cart.map((product) => (
+              <>
+                <div key={product.id} className="cardProduct">
+                  <img src={ArabeCoffe} alt="" />
+                  <div className="bodyCard">
+                    <div className="header">
+                      <h5>{product.name}l</h5>
+                      <p>{product.price}</p>
+                    </div>
+                    <div className="footerCard">
+                      <div className="buttons">
+                        <button>
+                          <Minus size={14} />
+                        </button>
+                        <p>{product.amount}</p>
+                        <button>
+                          <Plus size={14} />
+                        </button>
+                      </div>
+                      <button
+                        className="remove"
+                        onClick={() => removeProduct(product.id)}
+                      >
+                        <Trash size={22} />
+                        REMOVER
+                      </button>
+                    </div>
                   </div>
-                  <button className="remove">
-                    <Trash size={22} />
-                    REMOVER
-                  </button>
                 </div>
-              </div>
-            </div>
-            <div className="divider"></div>
-            <div className="cardProduct">
-              <img src={ArabeCoffe} alt="" />
-              <div className="bodyCard">
-                <div className="header">
-                  <h5>Expresso Tradicional</h5>
-                  <p>R$ 9.90</p>
-                </div>
-                <div className="footerCard">
-                  <div className="buttons">
-                    <button>
-                      <Minus size={14} />
-                    </button>
-                    <p>1</p>
-                    <button>
-                      <Plus size={14} />
-                    </button>
-                  </div>
-                  <button className="remove">
-                    <Trash size={22} />
-                    REMOVER
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="divider"></div>
+                <div className="divider"></div>
+              </>
+            ))}
             <C.CartFooter>
               <div>
                 <h6>Total de itens</h6>

@@ -16,6 +16,7 @@ interface CartContextData {
   cart: Product[]
   addProduct: (product: Product) => Promise<void>
   updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void
+  removeProduct: (productId: number) => void
 }
 
 export const CartContex = createContext<CartContextData>({} as CartContextData)
@@ -67,10 +68,21 @@ export function CartContexProvaider({ children }: CartProviderProps) {
     }
   }
 
-  // function removeProduct(productId: number) {
-  //   try {
-  //   } catch (error) {}
-  // }
+  function removeProduct(productId: number) {
+    try {
+      const productExists = cart.find((product) => product.id === productId)
+
+      if (productExists) {
+        const newCart = cart.filter((product) => product.id !== productId)
+        setCart(newCart)
+        localStorage.setItem('@CoffeDelivery:cart', JSON.stringify(newCart))
+      } else {
+        throw Error()
+      }
+    } catch (error) {
+      toast.error('Erro na remoção do produto')
+    }
+  }
 
   async function updateProductAmount({
     productId,
@@ -113,7 +125,9 @@ export function CartContexProvaider({ children }: CartProviderProps) {
     }
   }
   return (
-    <CartContex.Provider value={{ cart, addProduct, updateProductAmount }}>
+    <CartContex.Provider
+      value={{ cart, addProduct, updateProductAmount, removeProduct }}
+    >
       {children}
     </CartContex.Provider>
   )
