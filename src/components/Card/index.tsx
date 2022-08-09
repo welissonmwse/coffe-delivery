@@ -3,33 +3,34 @@ import { Minus, Plus, ShoppingCartSimple } from 'phosphor-react'
 import { useCart } from '../../hooks/useCart'
 import { Product } from '../../@types'
 import ArabeCoffe from '../../assets/arabe.svg'
-import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
 interface CardProps {
   product: Product
 }
 
+interface CartItemsAmount {
+  [key: number]: number
+}
+
 export function Card({ product }: CardProps) {
-  const { addProduct, updateProductAmount } = useCart()
-  const [amount, setAmount] = useState(0)
+  const { cart, addProduct, updateProductAmount } = useCart()
+
+  const cartItemsAmount = cart.reduce((sumAmount, product) => {
+    const newSumAmount = { ...sumAmount }
+    newSumAmount[product.id] = product.amount
+    return newSumAmount
+  }, {} as CartItemsAmount)
 
   function handleAddProduct(product: Product) {
     addProduct(product)
   }
 
-  function handleProductIncrement(product: Product) {
-    setAmount(amount + 1)
-    updateProductAmount({
-      productId: product.id,
-      amount,
-    })
-  }
-
   function handleProductDecrement(product: Product) {
-    setAmount(amount - 1)
+    console.log(product.amount)
     updateProductAmount({
       productId: product.id,
-      amount,
+      amount: cartItemsAmount[product.id] - 1,
     })
   }
 
@@ -44,8 +45,10 @@ export function Card({ product }: CardProps) {
       <C.CardFooter>
         <div className="priceAmount">
           <p>
-            <span>R$ </span>
-            {product.price}
+            {new Intl.NumberFormat('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            }).format(product.price)}
           </p>
         </div>
         <div className="cartButtonsAmount">
@@ -53,14 +56,14 @@ export function Card({ product }: CardProps) {
             <button onClick={() => handleProductDecrement(product)}>
               <Minus size={14} />
             </button>
-            <p>{amount}</p>
-            <button onClick={() => handleProductIncrement(product)}>
+            <p>{cartItemsAmount[product.id] || 0}</p>
+            <button onClick={() => handleAddProduct(product)}>
               <Plus size={14} />
             </button>
           </div>
-          <button className="cart" onClick={() => handleAddProduct(product)}>
+          <NavLink to="/cart" className="cart">
             <ShoppingCartSimple size={22} />
-          </button>
+          </NavLink>
         </div>
       </C.CardFooter>
     </C.CardContainer>

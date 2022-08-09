@@ -42,7 +42,7 @@ export function CartContexProvaider({ children }: CartProviderProps) {
 
       const stockAmount = stock.data.amount
       const currentAmount = productExists ? productExists.amount : 0
-      const amount = currentAmount + curruentProduct.amount
+      const amount = currentAmount + 1
 
       if (amount > stockAmount) {
         toast.error('Quantidade solicitada fora de estoque')
@@ -89,7 +89,10 @@ export function CartContexProvaider({ children }: CartProviderProps) {
     amount,
   }: UpdateProductAmount) {
     try {
-      if (amount <= 0) return
+      if (amount <= 0) {
+        removeProduct(productId)
+        return
+      }
 
       const updadteCart = [...cart]
       const productExists = updadteCart.find(
@@ -114,6 +117,7 @@ export function CartContexProvaider({ children }: CartProviderProps) {
       }
     } catch (error) {
       toast.error('Erro na alteração de quantidade do produto')
+      console.error(error)
     }
   }
   return (
