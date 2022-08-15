@@ -9,7 +9,7 @@ import {
   Trash,
 } from 'phosphor-react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { Product } from '../../@types'
 import ArabeCoffe from '../../assets/arabe.svg'
 import { useCart } from '../../hooks/useCart'
@@ -25,15 +25,25 @@ const newProductRequestFormSchema = z.object({
   city: z.string(),
   uf: z.string(),
   type: z.enum(['creditCard', 'debitCard', 'money']),
+  // product: z.array(
+  //   z.object({
+  //     amount: z.number(),
+  //     description: z.string(),
+  //     id: z.number(),
+  //     name: z.string(),
+  //     price: z.number(),
+  //   }),
+  // ),
 })
 
 type NewProductRequestFormInputs = z.infer<typeof newProductRequestFormSchema>
 
 export function Cart() {
   const { cart, removeProduct, updateProductAmount } = useCart()
-  const { register, handleSubmit } = useForm<NewProductRequestFormInputs>({
-    resolver: zodResolver(newProductRequestFormSchema),
-  })
+  const { control, register, handleSubmit } =
+    useForm<NewProductRequestFormInputs>({
+      resolver: zodResolver(newProductRequestFormSchema),
+    })
 
   const subTotal = cart.reduce((subTotal, product) => {
     return subTotal + product.amount * product.price
@@ -55,10 +65,21 @@ export function Cart() {
     })
   }
 
-  function handleCreateRequest(data: any) {
+  function handleCreateRequest(data: NewProductRequestFormInputs) {
     const newProductRequest = {
-      ...data,
-      ...cart,
+      zipCode: data.zipCode,
+      street: data.street,
+      numberHouse: data.numberHouse,
+      complement: data.complement,
+      district: data.district,
+      city: data.city,
+      uf: data.uf,
+      type: data.type,
+      total: new Intl.NumberFormat('pt-br', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format(total),
+      product: [...cart],
     }
     console.log(newProductRequest)
   }
@@ -118,20 +139,31 @@ export function Cart() {
                 </p>
               </div>
             </div>
-            <C.PaymentTypeContainer>
-              <C.RadioBox value="creditCard">
-                <CreditCard size={15} />
-                <span>Cartão de crédito</span>
-              </C.RadioBox>
-              <C.RadioBox value="debitCard">
-                <Bank size={15} />
-                <span>cartão de débito</span>
-              </C.RadioBox>
-              <C.RadioBox value="money">
-                <Money size={15} />
-                <span>dinheiro</span>
-              </C.RadioBox>
-            </C.PaymentTypeContainer>
+            <Controller
+              control={control}
+              name="type"
+              render={({ field }) => {
+                return (
+                  <C.PaymentTypeContainer
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  >
+                    <C.RadioBox value="creditCard">
+                      <CreditCard size={15} />
+                      <span>Cartão de crédito</span>
+                    </C.RadioBox>
+                    <C.RadioBox value="debitCard">
+                      <Bank size={15} />
+                      <span>cartão de débito</span>
+                    </C.RadioBox>
+                    <C.RadioBox value="money">
+                      <Money size={15} />
+                      <span>dinheiro</span>
+                    </C.RadioBox>
+                  </C.PaymentTypeContainer>
+                )
+              }}
+            />
           </div>
         </div>
         <div className="containerRight">
