@@ -8,15 +8,32 @@ import {
   Plus,
   Trash,
 } from 'phosphor-react'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Product } from '../../@types'
 import ArabeCoffe from '../../assets/arabe.svg'
 import { useCart } from '../../hooks/useCart'
+import * as z from 'zod'
 import * as C from './styles'
+
+const newProductRequestFormSchema = z.object({
+  zipCode: z.string(),
+  street: z.string(),
+  numberHouse: z.string(),
+  complement: z.string().optional(),
+  district: z.string(),
+  city: z.string(),
+  uf: z.string(),
+  type: z.enum(['creditCard', 'debitCard', 'money']),
+})
+
+type NewProductRequestFormInputs = z.infer<typeof newProductRequestFormSchema>
 
 export function Cart() {
   const { cart, removeProduct, updateProductAmount } = useCart()
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit } = useForm<NewProductRequestFormInputs>({
+    resolver: zodResolver(newProductRequestFormSchema),
+  })
 
   const subTotal = cart.reduce((subTotal, product) => {
     return subTotal + product.amount * product.price
