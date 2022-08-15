@@ -119,15 +119,15 @@ export function Cart() {
               </div>
             </div>
             <C.PaymentTypeContainer>
-              <C.RadioBox>
+              <C.RadioBox value="creditCard">
                 <CreditCard size={15} />
                 <span>Cartão de crédito</span>
               </C.RadioBox>
-              <C.RadioBox>
+              <C.RadioBox value="debitCard">
                 <Bank size={15} />
                 <span>cartão de débito</span>
               </C.RadioBox>
-              <C.RadioBox>
+              <C.RadioBox value="money">
                 <Money size={15} />
                 <span>dinheiro</span>
               </C.RadioBox>

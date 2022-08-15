@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import * as RadioGroup from '@radix-ui/react-radio-group'
 
 export const CartContainer = styled.div`
   max-width: 1120px;
@@ -89,7 +90,7 @@ export const FormContainer = styled.form`
   }
 `
 
-export const PaymentTypeContainer = styled.div`
+export const PaymentTypeContainer = styled(RadioGroup.Root)`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.5rem;
@@ -97,9 +98,9 @@ export const PaymentTypeContainer = styled.div`
   margin-top: 1rem;
 `
 // RadioBoxProps
-export const RadioBox = styled.button`
+export const RadioBox = styled(RadioGroup.Item)`
   height: 3.125rem;
-  border: none;
+  border: 1px solid ${(props) => props.theme['base-button']};
   border-radius: 0.375rem;
   cursor: pointer;
 
@@ -111,8 +112,14 @@ export const RadioBox = styled.button`
 
   transition: background-color 0.2s;
 
-  &:hover {
+  &[data-state='unchecked']:hover {
     background-color: ${(props) => props.theme['base-hover']};
+    border-color: ${(props) => props.theme['base-hover']};
+  }
+
+  &[data-state='checked'] {
+    background-color: ${(props) => props.theme['purple-light']};
+    border-color: ${(props) => props.theme.purple};
   }
 
   svg {
