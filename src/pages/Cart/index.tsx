@@ -8,6 +8,7 @@ import {
   Plus,
   Trash,
 } from 'phosphor-react'
+import { useForm } from 'react-hook-form'
 import { Product } from '../../@types'
 import ArabeCoffe from '../../assets/arabe.svg'
 import { useCart } from '../../hooks/useCart'
@@ -15,6 +16,7 @@ import * as C from './styles'
 
 export function Cart() {
   const { cart, removeProduct, updateProductAmount } = useCart()
+  const { register, handleSubmit } = useForm()
 
   const subTotal = cart.reduce((subTotal, product) => {
     return subTotal + product.amount * product.price
@@ -35,9 +37,18 @@ export function Cart() {
       amount: product.amount - 1,
     })
   }
+
+  function handleCreateRequest(data: any) {
+    const newProductRequest = {
+      ...data,
+      ...cart,
+    }
+    console.log(newProductRequest)
+  }
+
   return (
     <C.CartContainer>
-      <C.FormContainer>
+      <C.FormContainer onSubmit={handleSubmit(handleCreateRequest)}>
         <div className="containerLeft">
           <h4>Complete seu pedido</h4>
           <div className="address">
@@ -50,20 +61,32 @@ export function Cart() {
             </div>
             <div className="formInputsGrup">
               <div className="inputContentItems">
-                <input type="text" placeholder="CEP" />
+                <input type="text" placeholder="CEP" {...register('zipCode')} />
                 <div></div>
               </div>
               <div className="inputContentItems">
-                <input type="text" placeholder="Rua" />
+                <input type="text" placeholder="Rua" {...register('street')} />
               </div>
               <div className="inputContentItems">
-                <input type="text" placeholder="Número" />
-                <input type="text" placeholder="Complemento" />
+                <input
+                  type="text"
+                  placeholder="Número"
+                  {...register('numberHouse')}
+                />
+                <input
+                  type="text"
+                  placeholder="Complemento"
+                  {...register('complement')}
+                />
               </div>
               <div className="inputContentItems">
-                <input type="text" placeholder="Bairro" />
-                <input type="text" placeholder="Cidade" />
-                <input type="text" placeholder="UF" />
+                <input
+                  type="text"
+                  placeholder="Bairro"
+                  {...register('district')}
+                />
+                <input type="text" placeholder="Cidade" {...register('city')} />
+                <input type="text" placeholder="UF" {...register('uf')} />
               </div>
             </div>
           </div>
