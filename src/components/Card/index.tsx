@@ -61,9 +61,15 @@ export function Card({ product }: CardProps) {
               <Plus size={14} />
             </button>
           </div>
-          <NavLink to="/cart" className="cart">
-            <ShoppingCartSimple size={22} />
-          </NavLink>
+          {cart.length > 0 ? (
+            <NavLink to="/cart" className="cart" title="Carrinho">
+              <ShoppingCartSimple size={22} />
+            </NavLink>
+          ) : (
+            <NavLink to="" className="cart" title="Carrinho">
+              <ShoppingCartSimple size={22} />
+            </NavLink>
+          )}
         </div>
       </C.CardFooter>
     </C.CardContainer>

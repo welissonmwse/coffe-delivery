@@ -18,10 +18,17 @@ export function Header() {
             <MapPin size={22} />
             Porto Alegre, RS
           </span>
-          <NavLink to="/cart" title="Carrinho">
-            <ShoppingCart size={22} />
-            {cart.length > 0 && <p>{cart.length}</p>}
-          </NavLink>
+          {cart.length > 0 ? (
+            <NavLink to="/cart" title="Carrinho">
+              <ShoppingCart size={22} />
+              {cart.length > 0 && <p>{cart.length}</p>}
+            </NavLink>
+          ) : (
+            <NavLink to="" title="Carrinho">
+              <ShoppingCart size={22} />
+              {cart.length > 0 && <p>{cart.length}</p>}
+            </NavLink>
+          )}
         </div>
       </C.HeaderContent>
     </C.HeaderContainer>
