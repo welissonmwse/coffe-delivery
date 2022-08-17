@@ -8,6 +8,7 @@ import {
   Plus,
   Trash,
 } from 'phosphor-react'
+import { useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { Product } from '../../@types'
@@ -39,7 +40,7 @@ const newProductRequestFormSchema = z.object({
 type NewProductRequestFormInputs = z.infer<typeof newProductRequestFormSchema>
 
 export function Cart() {
-  const { cart, removeProduct, updateProductAmount } = useCart()
+  const { cart, removeProduct, updateProductAmount, resetCart } = useCart()
   const { control, register, handleSubmit } =
     useForm<NewProductRequestFormInputs>({
       resolver: zodResolver(newProductRequestFormSchema),
@@ -48,6 +49,8 @@ export function Cart() {
   const subTotal = cart.reduce((subTotal, product) => {
     return subTotal + product.amount * product.price
   }, 0)
+
+  const navigate = useNavigate()
 
   const total = subTotal + 3.5
 
@@ -82,6 +85,13 @@ export function Cart() {
       product: [...cart],
     }
     console.log(newProductRequest)
+    localStorage.setItem(
+      '@CoffeDelivery:pedido',
+      JSON.stringify(newProductRequest),
+    )
+    localStorage.removeItem('@CoffeDelivery:cart')
+    resetCart()
+    navigate('/success')
   }
 
   return (

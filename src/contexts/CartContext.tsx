@@ -17,6 +17,7 @@ interface CartContextData {
   addProduct: (product: Product) => Promise<void>
   updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void
   removeProduct: (productId: number) => void
+  resetCart: () => void
 }
 
 export const CartContex = createContext<CartContextData>({} as CartContextData)
@@ -31,6 +32,10 @@ export function CartContexProvaider({ children }: CartProviderProps) {
 
     return []
   })
+
+  function resetCart() {
+    setCart([])
+  }
 
   async function addProduct(curruentProduct: Product) {
     try {
@@ -122,7 +127,13 @@ export function CartContexProvaider({ children }: CartProviderProps) {
   }
   return (
     <CartContex.Provider
-      value={{ cart, addProduct, updateProductAmount, removeProduct }}
+      value={{
+        cart,
+        addProduct,
+        updateProductAmount,
+        removeProduct,
+        resetCart,
+      }}
     >
       {children}
     </CartContex.Provider>
